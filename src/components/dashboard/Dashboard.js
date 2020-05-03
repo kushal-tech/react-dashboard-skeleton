@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import Chatting from '../chat/Chatting';
 
 const styles = {
   root: {
@@ -23,13 +24,29 @@ const styles = {
 };
 
 class Dashboard extends React.Component {
+
+  constructor(){
+    super()
+    this.state = {
+      isChat : false
+    }
+  }
+
+  handleChange=()=>{
+    this.setState({isChat: true})
+  }
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.app}>
-        <Button color="primary" variant="fab" className={classes.plusButton}>
-          <QuestionAnswerIcon/>
-        </Button>
+        {this.state.isChat ? (
+          <Chatting/>
+        ):(
+          <Button color="primary" variant="fab" className={classes.plusButton} onClick={this.handleChange}>
+            <QuestionAnswerIcon/>
+          </Button>
+        )}
       </div>
     );
   }

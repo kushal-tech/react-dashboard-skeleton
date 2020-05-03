@@ -21,7 +21,6 @@ class Signup extends Component {
     }
 
   handleSubmit = () => {
-      console.log(this.state.name)
     this.props.history.push("/home/"+this.state.name);
   };
 
