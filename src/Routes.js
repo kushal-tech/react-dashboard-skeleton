@@ -1,22 +1,21 @@
 import React from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
-import asyncComponent from "./AsyncComponent";
+//import asyncComponent from "./AsyncComponent";
 //const AsyncStreamBase = asyncComponent(() => import("./stream/StreamBase"));
-
+import Theme from "./components/theme";
 import AppBase from "./components/AppBase";
-import Signup from "./components/registration/Signup";
-import Dashboard from "./components/dashboard/Dashboard";
+import Registration from './components/registration';
 
-const App = () => {
+const AppRoute = () => {
   return (
-    <AppBase>
+    <Theme>
       <Switch>
-        <Route exact path="/" component={Signup} />
-        <Route path="/home/:name" component={Dashboard} />
+        <Route exact path="/" component={Registration} />
+        <Route path="/home/:name" component={AppBase} />
       </Switch>
-    </AppBase>
+    </Theme>
   )
 }
 
-export default (App)
+export default AppRoute

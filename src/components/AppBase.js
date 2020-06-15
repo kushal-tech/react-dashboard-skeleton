@@ -1,42 +1,20 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Switch, Route } from "react-router-dom";
 
 import Header from './Header';
-import { Switch, Route } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-import Footer from './Footer';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      500: '#571845'
-    },
-    secondary : {
-      main : "#ffffff"
-    }
-  },
-});
-
-const styles = {
-
-}
-
+import Dashboard from './dashboard/Dashboard';
 const AppBase =(props)=> {
   return (
-    <MuiThemeProvider theme={theme}>
+    <React.Fragment>
       <Header></Header>
       <div style={{marginTop:"75px"}}>
-        {props.children}
+        <Switch>
+          <Route path="/home/:name" component={Dashboard} />
+        </Switch>
       </div>
-    </MuiThemeProvider>
+    </React.Fragment>
   );
 }
 
-AppBase.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default (withStyles(styles)(AppBase))
+export default AppBase

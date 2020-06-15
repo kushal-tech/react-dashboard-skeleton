@@ -1,23 +1,23 @@
-var webpack = require("webpack");
-var path = require("path");
-var CompressionPlugin = require("compression-webpack-plugin");
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+var webpack = require("webpack")
+var path = require("path")
+var CompressionPlugin = require("compression-webpack-plugin")
+var UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 
-module.exports = getConfiguration;
+module.exports = getConfiguration
 
 function getConfiguration(env) {
-  var outFilePath = __dirname+"\\public";
-  var pluginsUsed = [];
-  var modeUsed = "development";
-  var optimize = {};
-  var appPath = 'C://Users//Kushal//';
+  var outFilePath = __dirname + "\\public"
+  var pluginsUsed = []
+  var modeUsed = "development"
+  var optimize = {}
+  var appPath = "C://Users//Kushal//"
 
-  if (env === 'prod') {
-    modeUsed = "production";
-    outFilePath = path.resolve(__dirname, appPath);
+  if (env === "prod") {
+    modeUsed = "production"
+    outFilePath = path.resolve(__dirname, appPath)
     pluginsUsed = [
       new webpack.DefinePlugin({
-         'process.env.NODE_ENV': '"production"'
+        "process.env.NODE_ENV": '"production"'
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
       new webpack.NoEmitOnErrorsPlugin(),
@@ -28,7 +28,7 @@ function getConfiguration(env) {
         threshold: 10240,
         minRatio: 0
       })
-    ];
+    ]
 
     optimize = {
       minimizer: [
@@ -46,64 +46,69 @@ function getConfiguration(env) {
       ]
     }
   } else {
-    console.log('Unknown env ' + env + '. Defaults to dev');
+    console.log("Unknown env " + env + ". Defaults to dev")
   }
 
-  function getConfigOutput(){
-
-    var outObject =  {
+  function getConfigOutput() {
+    var outObject = {
       entry: {
-        "bundle": "./src/index.js",
+        bundle: "./src/index.js"
       },
       output: {
-          filename: '[name].js',
-          path: outFilePath
+        filename: "[name].js",
+        path: outFilePath
       },
       //mode : modeUsed,
       plugins: pluginsUsed,
       //optimization: optimize,
-      module : {
-    		rules: [
-    			{
-    				test: /\.jsx?$/,
-    				exclude: /(node_modules|bower_components)/,
-            use: {
-    					loader: 'babel-loader',
-    				}
-    			},
+      module: {
+        rules: [
           {
-    				test: /\.css?$/,
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
             use: {
-    					loader: 'css-loader',
-    				}
-    			}
-    		]
-    	},
-      resolve: {
-        modules: [
-          path.resolve(__dirname + '/src'),
-          path.resolve(__dirname + '/node_modules')
+              loader: "babel-loader"
+            }
+          },
+          {
+            test: /\.css$/i,
+            use: "css-loader"
+          },
+          {
+            test: /\.(woff(2)?|ttf|eot|svg|png)(\?v=\d+\.\d+\.\d+)?$/,
+            use: [
+              {
+                loader: "file-loader"
+              }
+            ]
+          }
         ]
       },
-      node : {
-        console:true,
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty'
+      resolve: {
+        modules: [
+          path.resolve(__dirname + "/src"),
+          path.resolve(__dirname + "/node_modules")
+        ]
+      },
+      node: {
+        console: true,
+        fs: "empty",
+        net: "empty",
+        tls: "empty"
       }
     }
-    return outObject;
+    return outObject
   }
 
-  var finalOut = [];
-  if(env === 'prod'){
-    finalOut.push(getConfigOutput());
+  var finalOut = []
+  if (env === "prod") {
+    finalOut.push(getConfigOutput())
   } else {
-    finalOut.push(getConfigOutput());
+    finalOut.push(getConfigOutput())
     //var data = getConfigOutput();
     //data.output.path = path.resolve(__dirname, appPath);
     //finalOut.push(data);
   }
 
-  return finalOut;
+  return finalOut
 }
